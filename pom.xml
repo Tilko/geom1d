@@ -13,6 +13,8 @@
 	<artifactId>geom1d</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
+	<!--  so complicated to put in maven central ....! 
+	
 	<name>geom1d</name>
 	<description>General utilies for 1D geometry</description>
 	<url>https://github.com/Tilko/geom1d</url>
@@ -36,9 +38,10 @@
 			<organizationUrl>https://github.com/Tilko</organizationUrl>
 		</developer>
 	</developers>
-
-
-
+	
+	
+	-->
+	
 	<properties>
 		<maven.compiler.source>13</maven.compiler.source>
 		<maven.compiler.target>13</maven.compiler.target>
