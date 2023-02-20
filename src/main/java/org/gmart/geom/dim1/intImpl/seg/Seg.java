@@ -15,6 +15,7 @@
  * the License.
  ******************************************************************************/
 package org.gmart.geom.dim1.intImpl.seg;
+
 import javax.annotation.processing.Generated;
 
 import org.gmart.geom.dim1.intImpl.Lengthy;
@@ -37,12 +38,14 @@ import lombok.Getter;
 @Generated("api_global.geom.dim1.numberImplGen.Gen")
 public interface Seg extends Lengthy {
 	//////////////////////////////////////////////////////////////
-	///General interface://///////////////////////////////////////
+	/// General interface://///////////////////////////////////////
 	//////////////////////////////////////////////////////////////
 	int beg();
+
 	default int len() {
 		return end() - beg();
 	}
+
 	default int end() {
 		return beg() + len();
 	}
@@ -52,40 +55,50 @@ public interface Seg extends Lengthy {
 		public int beg() {
 			return 0;
 		}
+
 		@Override
 		public int len() {
 			return 0;
 		}
+
 		@Override
 		public int end() {
 			return 0;
 		}
-	};	
-	public static Optional<Seg> getEmptySeg(){
+	};
+
+	public static Optional<Seg> getEmptySeg() {
 		return Optional.empty();
 	}
-	/** 
+
+	/**
 	 * use Bounds::of instead
+	 * 
 	 * @param beg
 	 * @param end
 	 * @return
 	 */
-	@Deprecated 
-	public static  Seg bounds(int beg, int end) {
+	@Deprecated
+	public static Seg bounds(int beg, int end) {
 		return new Bounds(beg, end);
 	}
+
 	public static Seg of(int beg, int len) {
 		return new Segment(beg, len);
 	}
+
 	public static Seg unit(int beg) {
 		return new UnitSeg(beg);
 	}
+
 	public static Seg point(int position) {
 		return new PointSeg(position);
 	}
+
 	public static Seg from0(int lenThatIsAlsoEnd) {
 		return new SegFrom0(lenThatIsAlsoEnd);
 	}
+
 	default String toString_Seg() {
 		return "beg:" + beg() + ", end:" + end() + ", len:" + len();
 	}
@@ -93,29 +106,35 @@ public interface Seg extends Lengthy {
 	default boolean isPonctual() {
 		return len() == 0;
 	}
+
 	default boolean contains(int position) {
-		return position >= beg()  &&  position < end();
+		return position >= beg() && position < end();
 	}
+
 	default boolean contains(Seg other) {
-		return other.beg() >= beg()  &&  other.end() <= end();
+		return other.beg() >= beg() && other.end() <= end();
 	}
+
 	default boolean contains_strict(Seg other) {
-		return this.beg() < other.beg()  &&  other.end() <  this.end();
+		return this.beg() < other.beg() && other.end() < this.end();
 	}
+
 	default boolean isInside(Seg other) {
 		return other.contains(this);
 	}
 
 	default boolean intersect(Seg s) {
-		return this.contains(s.beg())  ||  this.contains(s.end());
+		return this.contains(s.beg()) || this.contains(s.end());
 	}
 
 	default Seg addLen(int lenInc) {
-		return new Segment(this.beg(), len()+ lenInc);
+		return new Segment(this.beg(), len() + lenInc);
 	}
+
 	default Seg translate(int delta) {
 		return new Segment(beg() + delta, len());
 	}
+
 	default Seg withBeg(int position) {
 		return new Segment(position, len());
 	}
@@ -124,11 +143,11 @@ public interface Seg extends Lengthy {
 //	}
 
 	//////////////////////////////////////////////////////////////
-	///Geom interface:////////////////////////////////////////////
+	/// Geom interface:////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////
 
-	//@sync absolute changed semantic from "len < 0 => len == 0" to "len < 0 => reverse bounds"
-	//use "toIncRange" instead
+	// @sync absolute changed semantic from "len < 0 => len == 0" to "len < 0 => reverse bounds"
+	// use "toIncRange" instead
 //	public default Seg absolute() {
 //		if(end() < beg())
 //			return new  PointSeg(beg());
@@ -138,23 +157,25 @@ public interface Seg extends Lengthy {
 	default boolean isNegativeVector() {
 		return len() <= 0;
 	}
+
 	default boolean isStrictNegativeVector() {
 		return len() < 0;
 	}
+
 	default Seg oppositeVect() {
 		return new Segment(beg(), -len());
 	}
-
 
 	public default Optional<Seg> intersectionOpt(Seg other) {
 		int b0 = beg();
 		int b1 = other.beg();
 		int e0 = end();
 		int e1 = other.end();
-		if(e0 <= b1  ||  e1 <= b0) 
+		if (e0 <= b1 || e1 <= b0)
 			return Optional.empty();
 		return Optional.of(Bounds.of(Math.max(b0, b1), Math.min(e0, e1)));
 	}
+
 	public default Seg inter(Seg other) {
 		int b0 = beg();
 		int b1 = other.beg();
@@ -162,6 +183,7 @@ public interface Seg extends Lengthy {
 		int e1 = other.end();
 		return Bounds.of(Math.max(b0, b1), Math.min(e0, e1));
 	}
+
 	public default Seg enclosingBoth(Seg other) {
 		return new Bounds(Math.min(this.beg(), other.beg()), Math.max(this.end(), other.end()));
 	}
@@ -169,10 +191,8 @@ public interface Seg extends Lengthy {
 //	public enum BiPresence {
 //		c00, c01, c10, c11;
 //	}
-	public final static int BiPresence00 = 0b00,
-			   BiPresence01 = 0b01,
-			   BiPresence10 = 0b10,
-			   BiPresence11 = 0b11;
+	public final static int BiPresence00 = 0b00, BiPresence01 = 0b01, BiPresence10 = 0b10, BiPresence11 = 0b11;
+
 //	@Getter 
 //	@AllArgsConstructor(staticName = "of")
 //	public static class SegWithBiPresence {
@@ -226,49 +246,45 @@ public interface Seg extends Lengthy {
 //		}
 //		return rez;
 //	}
-	@Getter 
+	@Getter
 	@AllArgsConstructor(staticName = "of")
 	public static class Partitions {
 		int[] bounds;
-		int [] presences;
+		int[] presences;
 	}
-	public default Partitions getSegWithBiPresenceList2(Seg other){
-		if(this.beg() == other.beg()) {
-			if(this.end() == other.end()) {
-				return Partitions.of(new int[]{beg(), end()}, 
-						               new int[]{BiPresence11});
-			} else if(this.end() > other.end()) {
-				return Partitions.of(new int[]{beg(), other.end(), end()}, 
-					              new int[]{     BiPresence11,   BiPresence10});
+
+	public default Partitions getSegWithBiPresenceList2(Seg other) {
+		if (this.beg() == other.beg()) {
+			if (this.end() == other.end()) {
+				return Partitions.of(new int[] { beg(), end() }, new int[] { BiPresence11 });
+			} else if (this.end() > other.end()) {
+				return Partitions.of(new int[] { beg(), other.end(), end() }, new int[] { BiPresence11, BiPresence10 });
 			} else {
-				return Partitions.of(new int[]{beg(), end(), other.end()}, 
-				                      new int[]{BiPresence11,   BiPresence10});
+				return Partitions.of(new int[] { beg(), end(), other.end() }, new int[] { BiPresence11, BiPresence10 });
 			}
-		} else if(this.beg() < other.beg()){
+		} else if (this.beg() < other.beg()) {
 			return this.assumingThisBegInfOtherBeg2(other, false);
 		} else {
 			return other.assumingThisBegInfOtherBeg2(this, true);
 		}
 	}
+
 	private Partitions assumingThisBegInfOtherBeg2(Seg other, boolean swap) {
 		int presence01 = swap ? BiPresence10 : BiPresence01;
 		int presence10 = swap ? BiPresence01 : BiPresence10;
-		if(this.end() == other.beg()) {
-			return Partitions.of(new int[]{beg(), end(), other.end()}, 
-                                       new int[]{presence10,   presence01});
-		} else if(this.end() < other.beg()) {
-			return Partitions.of(new int[]{beg(), end(), other.beg(), other.end()}, 
-                                      new int[]{presence10,   BiPresence00,    presence01});
+		if (this.end() == other.beg()) {
+			return Partitions.of(new int[] { beg(), end(), other.end() }, new int[] { presence10, presence01 });
+		} else if (this.end() < other.beg()) {
+			return Partitions.of(new int[] { beg(), end(), other.beg(), other.end() }, new int[] { presence10, BiPresence00, presence01 });
 		} else {
-			if(this.end() == other.end()) {
-				return Partitions.of(new int[]{beg(), other.beg(), other.end()}, 
-                                            new int[]{presence10,   BiPresence11});
-			} else if(this.end() > other.end()) {
-				return Partitions.of(new int[]{beg(), other.beg(), other.end(), this.end()}, 
-                                          new int[]{presence10,   BiPresence11, presence10});
+			if (this.end() == other.end()) {
+				return Partitions.of(new int[] { beg(), other.beg(), other.end() }, new int[] { presence10, BiPresence11 });
+			} else if (this.end() > other.end()) {
+				return Partitions.of(new int[] { beg(), other.beg(), other.end(), this.end() },
+						new int[] { presence10, BiPresence11, presence10 });
 			} else {
-				return Partitions.of(new int[]{beg(), other.beg(), this.end(), other.end()}, 
-                                               new int[]{presence10,   BiPresence11, presence01});
+				return Partitions.of(new int[] { beg(), other.beg(), this.end(), other.end() },
+						new int[] { presence10, BiPresence11, presence01 });
 			}
 		}
 	}
@@ -283,8 +299,6 @@ public interface Seg extends Lengthy {
 //		return Geom.bounds(Math.min(b0, b1), Math.max(b0, b1));
 //	}
 
-
-
 //	public default int absBeg() {
 //		return Math.min(getBeg(), getEnd());
 //	}
@@ -292,96 +306,120 @@ public interface Seg extends Lengthy {
 //		return Math.max(getBeg(), getEnd());
 //	}
 
-	/** same result of toIncRange, it is to have a common interface with DSeg (but for"D" prefix) (with different impl) for code generation convenience */
-		default Seg toAbsoluteSegment() {
+	/**
+	 * same result of toIncRange, it is to have a common interface with DSeg (but for"D" prefix) (with
+	 * different impl) for code generation convenience
+	 */
+	default Seg toAbsoluteSegment() {
 		return toIncRange();
 	}
-	//////////////////////////////////////////////////////////////
-	///Range interface:///////////////////////////////////////////
-	///with "beg in end out" convention
-	//////////////////////////////////////////////////////////////
 
+	//////////////////////////////////////////////////////////////
+	/// Range interface:///////////////////////////////////////////
+	/// with "beg in end out" convention
+	//////////////////////////////////////////////////////////////
+	default String susString(String str) {
+		return str.substring(beg(), end());
+	}
+	default String substitute(String original, String replacement) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(original.substring(0, beg()));
+		sb.append(replacement);
+		sb.append(original.substring(end()));
+		return sb.toString();
+	}
 	default int last() {
 		return end() - 1;
 	}
+
 	public static Seg pbounds(int beg, int end) {
-		if(beg > end)
+		if (beg > end)
 			return new PointSeg(beg);
 		return new Bounds(beg, end);
 	}
+
 	/**
 	 * following positive iteration convention => {"len <= 0" => empty subList result}
+	 * 
 	 * @param <T>
 	 * @param list
 	 * @return
 	 */
-	default <T> List<T> subList(List<T> list){
+	default <T> List<T> subList(List<T> list) {
 		int beg = beg();
 		int end = end();
-		if(beg >= end)
+		if (beg >= end)
 			return List.of();
 		return list.subList(beg, end);
 	}
-	default <T> List<T> subList_discardingDirection(List<T> list){
+
+	default <T> List<T> subList_discardingDirection(List<T> list) {
 		return this.toIncRange().subList(list);
 	}
+
 	default void forEach(IntConsumer user) {
 		int end = this.end();
-		for(int i = this.beg(); i < end; i++) {
+		for (int i = this.beg(); i < end; i++) {
 			user.accept(i);
 		}
 	}
 
 	default void forEach(boolean reverseOrder, IntConsumer user) {
-		if(reverseOrder) {
+		if (reverseOrder) {
 			this.reverseRange().forEachForNegativeVector(user);
-		}
-		else forEach(user);
+		} else
+			forEach(user);
 	}
+
 	/**
 	 * len < 0 => dec order (keeping "beg-in end-out" convention)
+	 * 
 	 * @param user
 	 */
 	default void forEach_lenGivingOrder(IntConsumer user) {
-		if(len() >= 0) {
+		if (len() >= 0) {
 			int end = this.end();
-			for(int i = this.beg(); i < end; i++)
+			for (int i = this.beg(); i < end; i++)
 				user.accept(i);
-		}
-		else forEachForNegativeVector(user);
+		} else
+			forEachForNegativeVector(user);
 	}
+
 	private void forEachForNegativeVector(IntConsumer user) {
 		int end = this.end();
-		for(int i = this.beg(); i > end; i--)
+		for (int i = this.beg(); i > end; i--)
 			user.accept(i);
 	}
 
-	
 	public static void main(String[] args) {
-		Seg.of(2, 4).forEach(i-> System.out.println(i));
+		Seg.of(2, 4).forEach(i -> System.out.println(i));
 		System.out.println("2:");
-		Seg.of(2, 4).reverseRange().forEach(i-> System.out.println(i));
+		Seg.of(2, 4).reverseRange().forEach(i -> System.out.println(i));
 		System.out.println("3:");
-		Seg.of(2, 4).reverseRange().forEach_lenGivingOrder(i-> System.out.println(i));
+		Seg.of(2, 4).reverseRange().forEach_lenGivingOrder(i -> System.out.println(i));
 		System.out.println("4:");
-		Seg.of(2, 4).reverseRange().reverseRange().forEach_lenGivingOrder(i-> System.out.println(i));
+		Seg.of(2, 4).reverseRange().reverseRange().forEach_lenGivingOrder(i -> System.out.println(i));
 		System.out.println("5:");
-		Seg.of(2, 4).forEach(true, i-> System.out.println(i));
+		Seg.of(2, 4).forEach(true, i -> System.out.println(i));
 		System.out.println("6:");
-		Bounds.of(5, 1).forEach(true, i-> System.out.println(i));
+		Bounds.of(5, 1).forEach(true, i -> System.out.println(i));
 	}
+
 	/**
-	 * reverseRange().forEach_lenGivingOrder => iteration in reverse order
-	 * if applied twice => no effect: identity == seg0 -> seg0.reverseRange().reverseRange() 
+	 * reverseRange().forEach_lenGivingOrder => iteration in reverse order if applied twice => no
+	 * effect: identity == seg0 -> seg0.reverseRange().reverseRange()
+	 * 
 	 * @return
 	 */
 	default Seg reverseRange() {
-		if(this.isStrictNegativeVector())
-			return new Bounds(end()+1, beg()+1);
-		else if(len() == 0)
+		if (this.isStrictNegativeVector())
+			return new Bounds(end() + 1, beg() + 1);
+		else if (len() == 0)
 			return this;
-		else return new Bounds(end()-1, beg()-1);
+		else
+			return new Bounds(end() - 1, beg() - 1);
 	}
+
 	default Seg toIncRange() {
 		return isStrictNegativeVector() ? reverseRange() : this;
 	}
@@ -389,47 +427,52 @@ public interface Seg extends Lengthy {
 	default Seg growAtExtremity(boolean decrementLeftBound, boolean incrementRightBound) {
 		return Bounds.of(this.beg() - (decrementLeftBound ? 1 : 0), this.end() + (incrementRightBound ? 1 : 0));
 	}
+
 	default Seg growAtLeft() {
 		return Bounds.of(this.beg() - 1, this.end());
 	}
+
 	default Seg growAtRight() {
 		return Bounds.of(this.beg(), this.end() + 1);
 	}
+
 	default Seg homotheticTransform(int thatOffset, Function<Integer, Integer> thatElementLenGetter) {
 		int beg = beg();
 		int end = end();
 		int b = thatOffset;
-		for(int i = 0; i < beg; i++) {
+		for (int i = 0; i < beg; i++) {
 			b += thatElementLenGetter.apply(i);
 		}
 		int e = b;
-		for(int i = beg; i < end; i++) {
+		for (int i = beg; i < end; i++) {
 			e += thatElementLenGetter.apply(i);
 		}
 		return Bounds.of(b, e);
 	}
+
 	default <T extends Lengthy> Seg homotheticTransform(int thatOffset, List<T> thatElements) {
 		int beg = beg();
 		int end = end();
 		int b = thatOffset;
-		for(int i = 0; i < beg; i++) {
+		for (int i = 0; i < beg; i++) {
 			b += thatElements.get(i).len();
 		}
 		int e = b;
-		for(int i = beg; i < end; i++) {
+		for (int i = beg; i < end; i++) {
 			e += thatElements.get(i).len();
 		}
 		return Bounds.of(b, e);
 	}
 
-
 	/**
-	 * /!\: range direction is discarded, you can reverse the stream order and the map it with Seg::reverseRange
+	 * /!\: range direction is discarded, you can reverse the stream order and the map it with
+	 * Seg::reverseRange
+	 * 
 	 * @param otherDirectedRange_directionDoesntMatter
 	 * @return
 	 */
 	default Stream<Seg> without(Seg otherDirectedRange_directionDoesntMatter) {
-		if(otherDirectedRange_directionDoesntMatter == null)
+		if (otherDirectedRange_directionDoesntMatter == null)
 			return Stream.of(this);
 		Seg otherRange = otherDirectedRange_directionDoesntMatter.toIncRange();
 		Seg thisRange = toIncRange();
@@ -438,29 +481,24 @@ public interface Seg extends Lengthy {
 		int b1 = otherRange.beg();
 		int e1 = otherRange.end();
 		Builder<Seg> builder = Stream.builder();
-		if(b1 < b0) {
-			if(e1 < b0)
+		if (b1 < b0) {
+			if (e1 < b0)
 				builder.add(this);
-			else if(e1 >= e0)
-				;//empty result
+			else if (e1 >= e0)
+				;// empty result
 			else {
 				builder.add(Bounds.of(e1, e0));
 			}
-		} else if(b1 > e0) {
+		} else if (b1 > e0) {
 			builder.add(this);
 		} else {
-			if(b0 != b1)
+			if (b0 != b1)
 				builder.add(Bounds.of(b0, b1));
-			if(e1 < e0) {
+			if (e1 < e0) {
 				builder.add(Bounds.of(e1, e0));
 			}
 		}
 		return builder.build();
 	}
-
-
-
-
-
 
 }

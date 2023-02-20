@@ -5,6 +5,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import org.gmart.base.data.structure.tuple.homogeneous.Bi;
+import org.gmart.geom.dim1.intImpl.seg.Seg;
 import org.gmart.lang.java.JavaPrimitives;
 import org.gmart.stjavagen.StForSingleJava;
 
@@ -55,7 +56,17 @@ public class Gen {
 			///Range interface:///////////////////////////////////////////
 			///with "beg in end out" convention
 			//////////////////////////////////////////////////////////////
-
+			default String susString(String str) {
+				return str.substring(beg(), end());
+			}
+			default String substitute(String original, String replacement) {
+				StringBuilder sb = new StringBuilder();
+				sb.append(original.substring(0, beg()));
+				sb.append(replacement);
+				sb.append(original.substring(end()));
+				return sb.toString();
+			}
+			
 			default int last() {
 				return end() - 1;
 			}
