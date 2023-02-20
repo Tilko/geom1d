@@ -1,4 +1,4 @@
-package org.gmart.geom.dim1.search;
+package org.gmart.geom.dim1.numberImplGen;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +10,7 @@ import org.gmart.base.data.transform.toPrimitive.ToInteger;
 import org.gmart.geom.dim1.intImpl.Lengthy;
 
 @Generated("api_global.geom.dim1.search.Gen")
-public class Search1D {
+public class BinarySearchTesting {
 	public static void main(String[] args) {
 		int intArr[] = { 10, 20, 30 };
 		System.out.println(Arrays.binarySearch(intArr, 5));

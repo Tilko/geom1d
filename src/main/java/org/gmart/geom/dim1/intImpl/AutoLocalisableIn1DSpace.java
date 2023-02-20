@@ -13,27 +13,10 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package org.gmart.geom.dim1;
+package org.gmart.geom.dim1.intImpl;
 
-public enum Alignment {
-	beg   (0.),
-	center(0.5),
-	end   (1.)
-	;
-	public final double coeff;
-	public double getCoeff() {
-		return coeff;
-	}
-	int coudou; 
-	Alignment(double coeff){
-		this.coeff = coeff;
-	}
-	
-	public double getCoord(double containerWingspan, double contentWingspan) {
-		return coeff*(containerWingspan - contentWingspan);
-	}
-	
-	public interface To_algoModuleId_EnumMapping {
-		Alignment to_algoModuleId_Homolog();
-	}
+import org.gmart.geom.dim1.intImpl.seg.Seg;
+
+public interface AutoLocalisableIn1DSpace {
+	Seg getExtensionIn1DSpace();
 }

@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package org.gmart.geom.dim1.algo.layout.nonOverlappingBy1DChannel;
+package org.gmart.geom.dim1.intImpl.algo.layout.nonOverlappingBy1DChannel;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.gmart.geom.dim1.algo.layout.SegmentInclusionCounting;
-import org.gmart.geom.dim1.algo.layout.SegmentInclusionCounting.NodeBase;
+import org.gmart.geom.dim1.intImpl.algo.layout.SegmentInclusionCounting;
+import org.gmart.geom.dim1.intImpl.algo.layout.SegmentInclusionCounting.NodeBase;
 import org.gmart.geom.dim1.intImpl.seg.Seg;
 
 public class NonOverlapingBy1DChannel<S extends Seg> {

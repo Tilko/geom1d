@@ -1,9 +1,9 @@
-package org.gmart.geom.dim1.algo.layout;
+package org.gmart.geom.dim1.doubleImpl.distribution;
 
 import java.util.stream.DoubleStream;
 
 import org.gmart.base.data.transform.number.doubleFuncts.UnitD2Y;
-import org.gmart.geom.dim1.Alignment;
+import org.gmart.geom.dim1.doubleImpl.Alignment;
 
 public class DiscreteUnitDistributions {
 	public static DoubleStream uniform(int cardinal) {

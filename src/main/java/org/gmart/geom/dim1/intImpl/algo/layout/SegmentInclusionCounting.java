@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package org.gmart.geom.dim1.algo.layout;
+package org.gmart.geom.dim1.intImpl.algo.layout;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;

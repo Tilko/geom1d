@@ -1,4 +1,4 @@
-package org.gmart.geom.dim1.search;
+package org.gmart.geom.dim1.numberImplGen;
 
 import java.io.IOException;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import org.gmart.lang.java.JavaPrimitives;
 import org.gmart.stjavagen.StForSingleJava;
 
-class Gen {
+class OldGenForExample {
 	public static void main(String[] args) throws IOException {
 		StForSingleJava.generateJavaFileFromSTGFile(st -> {
 			List.of(JavaPrimitives.primitives).stream().filter(p -> {

@@ -13,10 +13,10 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package org.gmart.geom.dim1;
+package org.gmart.geom.dim1.intImpl.algo.layout;
 
-import org.gmart.geom.dim1.intImpl.seg.Seg;
-
-public interface AutoLocalisableIn1DSpace {
-	Seg getExtensionIn1DSpace();
+public interface InclusionCounter {
+	int getInclusionCount();
+	void addCount(int count);
+	void incCount();
 }
