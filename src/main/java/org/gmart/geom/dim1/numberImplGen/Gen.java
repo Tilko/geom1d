@@ -5,9 +5,9 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import org.gmart.base.data.structure.tuple.homogeneous.Bi;
+import org.gmart.devtools.coding.java.gen.templating.JavaGenerators;
 import org.gmart.geom.dim1.intImpl.seg.Seg;
 import org.gmart.lang.java.JavaPrimitives;
-import org.gmart.stjavagen.StForSingleJava;
 
 public class Gen {
 	public static void main(String[] args) {
@@ -20,7 +20,7 @@ public class Gen {
 
 			Function<String, String> numberConcretion = stgName -> stgName.replace("Number", primitive.getNameBoxedShort()).replace("number", primitive.getName());
 			Function<String, String> toConcreteName = stgName -> typePrefix + stgName;
-			StForSingleJava.generateJavaFilesFromSTGFileTree(null//new File("C:\\Users\\marti\\workingLowLevel\\geom1d\\src\\main\\java\\api_global\\geom\\dim1\\numberImplGen\\test")
+			JavaGenerators.generateJavaFilesFromSTGFileTree(null//new File("C:\\Users\\marti\\workingLowLevel\\geom1d\\src\\main\\java\\api_global\\geom\\dim1\\numberImplGen\\test")
 					, numberConcretion, toConcreteName, (typeName, st) -> {
 						//boxed, raw, capRaw, typePrefix, packageName, typeNameOfFile, specificPart, speImports
 						st.add("boxed", primitive.getNameBoxed());
